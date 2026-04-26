@@ -8,13 +8,13 @@ const logoutRequest = async () => {
 
 export const useLogout = () => {
   const queryClient = useQueryClient();
-  const logout = useAuthStore((state) => state.logout);
+  const clearAuth = useAuthStore((state) => state.clearAuth);
 
   return useMutation({
     mutationFn: logoutRequest,
 
     onSuccess: () => {
-      logout();
+      clearAuth();
       queryClient.removeQueries({ queryKey: ['me'] });
     },
   });

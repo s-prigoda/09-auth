@@ -16,7 +16,7 @@ export default function AuthProvider({
   const pathname = usePathname();
   const router = useRouter();
 
-  const { setUser, setIsAuthenticated, clearAuth } = useAuthStore();
+  const { setUser, clearAuth } = useAuthStore();
 
   const [loading, setLoading] = useState(true);
 
@@ -32,7 +32,6 @@ export default function AuthProvider({
         });
 
         setUser(res.data);
-        setIsAuthenticated(true);
       } catch {
         clearAuth();
       } finally {
@@ -41,7 +40,7 @@ export default function AuthProvider({
     };
 
     checkAuth();
-  }, [pathname, setUser, setIsAuthenticated, clearAuth]);
+  }, [pathname, setUser, clearAuth]);
 
   const isPrivate = PRIVATE_ROUTES.some((route) => pathname.startsWith(route));
 

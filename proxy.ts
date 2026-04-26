@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { refreshSession } from '@/lib/api/serverApi';
+import { cookies } from 'next/headers';
 
 const PUBLIC_ROUTES = ['/sign-in', '/sign-up'];
 const PRIVATE_ROUTES = ['/notes', '/profile'];
@@ -7,11 +8,11 @@ const PRIVATE_ROUTES = ['/notes', '/profile'];
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const accessToken = request.cookies.get('accessToken')?.value;
-  const refreshToken = request.cookies.get('refreshToken')?.value;
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get('accessToken')?.value;
+  const refreshToken = cookieStore.get('refreshToken')?.value;
 
   const isPublic = PUBLIC_ROUTES.some((route) => pathname.startsWith(route));
-
   const isPrivate = PRIVATE_ROUTES.some((route) => pathname.startsWith(route));
 
   let currentAccess = accessToken;
@@ -38,7 +39,7 @@ export async function proxy(request: NextRequest) {
       });
 
       if (isPublic) {
-        return NextResponse.redirect(new URL('/', request.url));
+        return NextResponse.redirect(new URL('/profile', request.url));
       }
 
       return nextResponse;
@@ -51,13 +52,12 @@ export async function proxy(request: NextRequest) {
       return response;
     }
   }
-
   if (!currentAccess && isPrivate) {
     return NextResponse.redirect(new URL('/sign-in', request.url));
   }
 
   if (currentAccess && isPublic) {
-    return NextResponse.redirect(new URL('/', request.url));
+    return NextResponse.redirect(new URL('/profile', request.url));
   }
 
   return NextResponse.next();

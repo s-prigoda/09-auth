@@ -4,6 +4,7 @@ import './globals.css';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
+import AuthProvider from '@/components/AuthProvider/AuthProvider';
 
 const roboto = Roboto({
   weight: ['400', '500', '700'],
@@ -42,16 +43,18 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${roboto.variable} ${roboto.variable}`}>
+    <html lang="en" className={`${roboto.variable}`}>
       <body className={roboto.className}>
         <TanStackProvider>
-          <Header />
-          <main style={{ minHeight: '80vh' }}>
-            {children}
-            {modal}
-          </main>
-          <Footer />
-          <div id="modal-root"></div>
+          <AuthProvider>
+            <Header />
+            <main style={{ minHeight: '80vh' }}>
+              {children}
+              {modal}
+            </main>
+            <Footer />
+            <div id="modal-root"></div>
+          </AuthProvider>
         </TanStackProvider>
       </body>
     </html>

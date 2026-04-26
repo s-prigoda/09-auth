@@ -5,7 +5,7 @@ import { useAuthStore } from '@/lib/store/authStore';
 
 export const useMe = () => {
   const setUser = useAuthStore((state) => state.setUser);
-  const logout = useAuthStore((state) => state.logout);
+  const clearAuth = useAuthStore((state) => state.clearAuth);
 
   const { data, isError } = useQuery({
     queryKey: ['me'],
@@ -21,7 +21,7 @@ export const useMe = () => {
 
   useEffect(() => {
     if (isError) {
-      logout();
+      clearAuth();
     }
-  }, [isError, logout]);
+  }, [isError, clearAuth]);
 };

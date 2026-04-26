@@ -8,7 +8,7 @@ import { useAuthStore } from '@/lib/store/authStore';
 import { useLogout } from '@/app/hooks/userSingUp';
 
 export default function AuthNavigation() {
-  const { user, isAuthenticated, logout: clearAuth } = useAuthStore();
+  const { user, isAuthenticated, clearAuth } = useAuthStore();
   const { mutate: logout } = useLogout();
   const router = useRouter();
 
