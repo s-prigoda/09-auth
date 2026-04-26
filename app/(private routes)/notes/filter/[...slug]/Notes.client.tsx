@@ -1,5 +1,5 @@
 'use client';
-import { fetchNotes } from '@/lib/api';
+
 import NoteList from '@/components/NoteList/NoteList';
 import SearchBox from '@/components/SearchBox/SearchBox';
 import Pagination from '@/components/Pagination/Pagination';
@@ -9,6 +9,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import css from './Notes.client.module.css';
 import Loader from '@/app/loading';
 import Link from 'next/link';
+import { fetchNotes } from '@/lib/api/clientApi';
 
 type Props = {
   tag?: string;
