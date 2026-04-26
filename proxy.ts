@@ -39,7 +39,7 @@ export async function proxy(request: NextRequest) {
       });
 
       if (isPublic) {
-        return NextResponse.redirect(new URL('/profile', request.url));
+        return NextResponse.redirect(new URL('/', request.url));
       }
 
       return nextResponse;
@@ -52,12 +52,13 @@ export async function proxy(request: NextRequest) {
       return response;
     }
   }
+
   if (!currentAccess && isPrivate) {
     return NextResponse.redirect(new URL('/sign-in', request.url));
   }
 
   if (currentAccess && isPublic) {
-    return NextResponse.redirect(new URL('/profile', request.url));
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
   return NextResponse.next();
